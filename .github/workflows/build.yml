@@ -1,6 +1,5 @@
-# 配置 GitHub Actions 自动构建
 name: Build APK
-on: [push] # 当有代码推送时触发
+on: [push]
 
 jobs:
   build-android:
@@ -31,4 +30,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: app-debug
-          path: bin/*.apk 
+          path: bin/*.apk
