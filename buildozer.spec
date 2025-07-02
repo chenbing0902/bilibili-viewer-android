@@ -14,7 +14,9 @@ source.include_patterns = assets/*,images/*,data/*
 source.exclude_dirs = tests, bin, .git, .github
 
 # 版本信息
+version.regex = __version__ = '(.*)'
 version = 0.1
+version.filename = %(source.dir)s/main.py
 
 # 依赖项
 requirements = python3,kivy==2.2.1,plyer,android,requests,urllib3
@@ -51,9 +53,6 @@ android.enable_androidx = True
 
 # 架构选择
 android.archs = arm64-v8a
-
-# 版本文件
-version.filename = %(source.dir)s/main.py
 
 [buildozer]
 # 日志级别 (0 = error only, 1 = info, 2 = debug)
