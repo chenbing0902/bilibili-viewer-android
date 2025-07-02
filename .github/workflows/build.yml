@@ -18,6 +18,15 @@ jobs:
         with:
           python-version: '3.9'
 
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
       - name: Fix apt packages
         run: |
           sudo rm -f /var/lib/apt/lists/lock
@@ -35,7 +44,6 @@ jobs:
             git \
             zip \
             unzip \
-            openjdk-8-jdk \
             python3-pip \
             autoconf \
             libtool \
@@ -55,16 +63,21 @@ jobs:
           python3 -m pip install --user --upgrade virtualenv
           python3 -m pip install --user --upgrade buildozer
           
+      - name: Accept Android licenses
+        run: |
+          yes | sdkmanager --licenses
+          
       - name: Setup build environment
         run: |
-          sudo mkdir -p /opt/android
-          sudo chown $USER:$USER /opt/android
-          export ANDROID_HOME=/opt/android
+          export ANDROID_HOME=$ANDROID_SDK_ROOT
+          export PATH=$PATH:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
           
       - name: Build with Buildozer
+        env:
+          ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
+          JAVA_HOME: /usr/lib/jvm/temurin-8-jdk-amd64
         run: |
           export PATH=$PATH:~/.local/bin/
-          export ANDROID_HOME=/opt/android
           buildozer android debug
           
       - name: Upload APK
