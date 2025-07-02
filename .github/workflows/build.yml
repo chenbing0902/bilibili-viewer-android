@@ -22,10 +22,12 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '8'
+          java-version: '17'
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        env:
+          SKIP_SDK_VERSION_CHECK: 1
 
       - name: Fix apt packages
         run: |
@@ -65,17 +67,19 @@ jobs:
           
       - name: Accept Android licenses
         run: |
-          yes | sdkmanager --licenses
+          yes | sdkmanager --licenses || true
           
       - name: Setup build environment
         run: |
           export ANDROID_HOME=$ANDROID_SDK_ROOT
           export PATH=$PATH:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
+          export SKIP_SDK_VERSION_CHECK=1
           
       - name: Build with Buildozer
         env:
           ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
-          JAVA_HOME: /usr/lib/jvm/temurin-8-jdk-amd64
+          JAVA_HOME: /usr/lib/jvm/temurin-17-jdk-amd64
+          SKIP_SDK_VERSION_CHECK: 1
         run: |
           export PATH=$PATH:~/.local/bin/
           buildozer android debug
