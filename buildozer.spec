@@ -35,8 +35,8 @@ android.arch = arm64-v8a
 android.accept_sdk_license = True
 
 # 应用图标和启动屏幕
-#icon.filename = %(source.dir)s/data/icon.png
-#presplash.filename = %(source.dir)s/data/presplash.png
+icon.filename = %(source.dir)s/data/icon.png
+presplash.filename = %(source.dir)s/data/presplash.png
 
 # 控制台输出（开发时设为1，发布时设为0）
 android.logcat_filters = *:S python:D
