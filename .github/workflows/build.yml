@@ -1,5 +1,6 @@
+# 配置 GitHub Actions 自动构建
 name: Build APK
-on: [push]
+on: [push] # 当有代码推送时触发
 
 jobs:
   build-android:
@@ -9,11 +10,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.9'
+
+      - name: Cache Buildozer dependencies
+        uses: actions/cache@v2
+        with:
+          path: .buildozer_cache
+          key: ${{ runner.os }}-${{ hashFiles('buildozer.spec') }}
 
       - name: Install dependencies
         run: |
@@ -31,3 +40,10 @@ jobs:
         with:
           name: app-debug
           path: bin/*.apk
+          
+      - name: Upload build logs if failed
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-logs
+          path: .buildozer/logs/* 
