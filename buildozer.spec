@@ -1,6 +1,6 @@
 [app]
 
-# App名称
+# 应用名称
 title = B站播放量助手
 
 # 包名
@@ -31,16 +31,6 @@ android.ndk = 25b
 android.sdk = 31
 android.arch = arm64-v8a
 
-# 应用图标和启动屏幕
-#icon.filename = %(source.dir)s/data/icon.png
-#presplash.filename = %(source.dir)s/data/presplash.png
-
-# 控制台输出（开发时设为1，发布时设为0）
-android.logcat_filters = *:S python:D
-
-# Python-for-android 配置
-p4a.bootstrap = sdl2
-
 # Android 组件配置
 android.enable_androidx = True
 
@@ -49,10 +39,3 @@ android.archs = arm64-v8a
 
 # 版本文件
 version.filename = %(source.dir)s/main.py
-
-[buildozer]
-# 日志级别 (0 = error only, 1 = info, 2 = debug)
-log_level = 2
-
-# 警告：不要使用自定义镜像源，让buildozer使用默认源
-# warning.txt = 使用默认源可以避免很多下载问题 
